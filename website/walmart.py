@@ -1,7 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 from time import sleep
-from alert import alert
+from email.message import EmailMessage
+import smtplib, ssl
 
 
 
@@ -16,23 +17,16 @@ def wmcheck(url, desire, email):
         product = requests.get(url,headers=headers) #get given url
         soup = BeautifulSoup(product.content,'lxml') 
         name = soup.find("h1").get_text().strip() #product name
-        print(name)
         
         try:
-            #price = float(soup.find(id="corePrice_feature_div").find_next("span").find_next("span").get_text().replace('$', '').replace(',', '').strip()) #price of product for amazon.ca
-            price =soup.find(itemprop="price").get_text()
+            price = float(soup.find(itemprop="price").get_text().replace('$', '').replace(',', '').strip())
 
-            #print(price)
         except:
-
-            try:
-                price = float(soup.find(id="price_inside_buybox").get_text().replace('$', '').replace(',', '').strip()) #price of product for amazon.com
-            except:
-                price = "" #if there is no price of the product
-        print(price)
+            price = "" #if there is no price of the product
+            return 1
         try:
             if price <= desire:
-                #alert(name,desire,url,email)
+                alert(name,desire,url,email)
                 break #end loop once product has reached consumer desired price or is lower than it.
 
         except:
@@ -41,4 +35,23 @@ def wmcheck(url, desire, email):
         break
         sleep(60*60*8) #checks price every 8 hours
 
-wmcheck("https://www.walmart.com/ip/Champion-Women-s-Plus-Mock-Neck-Zip-Up-Colorblock-Sherpa-Pullover/414028922?athcpid=414028922&athpgid=AthenaHomepageDesktop__gm__-1.0&athcgid=null&athznid=ItemCarousel_efadad11-5f2a-4eb7-9aae-5e76dcda3c48_items&athieid=null&athstid=CS020&athguid=y7AUAsnNDEsgcG4JMY3QDxhvLGsq_arwzvPi&athancid=null&athena=true&athbdg=L1700",5,"hery")
+def alert(name,desire,url,email):
+    port = 465  # For SSL
+
+    msg = EmailMessage()
+    msg.set_content("Hi there,\n\nThe %s has reached %.2f or lower.\n\nHere is the link to the product:\n%s" % (name,desire,url))
+    
+
+    msg['Subject'] = "Sartaj's Price Alert!"
+    msg['From'] = "sartajpricealerts@gmail.com"
+    msg['To'] = email
+
+    # Create a secure SSL context
+    context = ssl.create_default_context()
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+        server.login("sartajpricealerts@gmail.com", "pricealert123")
+        server.send_message(msg)
+
+
+
