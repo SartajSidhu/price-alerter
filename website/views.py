@@ -13,10 +13,13 @@ def az():
         desire = request.form.get('desire')
         email = request.form.get('email')
         desire = float(desire.replace('$', '').replace(',', '').strip())
-        if(amazoncheck(url,desire,email)==1):
-            flash("Sorry can't find the products price", category="error")
+        if (("@" in email)==False) or (("." in email)==False):
+            flash("Please enter a valid email")
         else:
-            flash("You will receive an email once the product is lower than $%.2f" % desire, category="success")
+            if(amazoncheck(url,desire,email)==1):
+                flash("Sorry can't find the products price", category="error")
+            else:
+                flash("You will receive an email once the product is lower than $%.2f" % desire, category="success")
 
     return render_template("az.html")
 
@@ -29,7 +32,7 @@ def wm():
         email = request.form.get('email')
         desire = float(desire.replace('$', '').replace(',', '').strip())
         if (("@" in email)==False) or (("." in email)==False):
-            flash("Sorry that is an invalid email")
+            flash("Please enter a valid email")
         else:
             if(wmcheck(url,desire,email)==1):
                 flash("Sorry can't find the products price", category="error")

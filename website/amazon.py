@@ -53,7 +53,3 @@ def alert(name,desire,url,email):
     with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
         server.login("sartajpricealerts@gmail.com", "pricealert123")
         server.send_message(msg)
-
-
-
-#amazoncheck("https://www.amazon.com/SENZER-SG500-Surround-Cancelling-Microphone/dp/B08FX35S7K/ref=sr_1_1_sspa?keywords=gaming+headsets&pd_rd_r=c4d7468e-313f-40f6-9aae-e5716265c219&pd_rd_w=ZxMNR&pd_rd_wg=k79VJ&pf_rd_p=12129333-2117-4490-9c17-6d31baf0582a&pf_rd_r=SASW71FZVRTGE9BF71B5&qid=1641768221&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyMFk1NU0xMzk0RUtHJmVuY3J5cHRlZElkPUEwNjMyMTI3MzQxVjA2Q1ZOUENVSCZlbmNyeXB0ZWRBZElkPUEwNDA4ODI2NVdENUFKRUFEVVFZJndpZGdldE5hbWU9c3BfYXRmJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ==",40,"sartajpricealerts@gmail.com")
