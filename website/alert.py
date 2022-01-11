@@ -6,7 +6,6 @@ def alert(name,desire,url,email):
 
     msg = EmailMessage()
     msg.set_content("Hi there,\n\nThe %s has reached %.2f or lower.\n\nHere is the link to the product:\n%s" % (name,desire,url))
-    
 
     msg['Subject'] = "Sartaj's Price Alert!"
     msg['From'] = "sartajpricealerts@gmail.com"

@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, flash, redirect
+from website import amazon
 from website.amazon import amazoncheck, alert
 from website.walmart import wmcheck
-#from website.alert import alert
+
 
 views = Blueprint('views', __name__)
 
@@ -12,6 +13,7 @@ def az():
         url = request.form.get('url')
         desire = request.form.get('desire')
         email = request.form.get('email')
+        email = email.strip()
         desire = float(desire.replace('$', '').replace(',', '').strip())
         if (("@" in email)==False) or (("." in email)==False):
             flash("Please enter a valid email")
@@ -20,6 +22,7 @@ def az():
                 flash("Sorry can't find the products price", category="error")
             else:
                 flash("You will receive an email once the product is lower than $%.2f" % desire, category="success")
+                amazoncheck(url,desire,email)
 
     return render_template("az.html")
 
@@ -30,6 +33,7 @@ def wm():
         url = request.form.get('url')
         desire = request.form.get('desire')
         email = request.form.get('email')
+        email = email.strip()
         desire = float(desire.replace('$', '').replace(',', '').strip())
         if (("@" in email)==False) or (("." in email)==False):
             flash("Please enter a valid email")

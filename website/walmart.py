@@ -4,8 +4,6 @@ from time import sleep
 from email.message import EmailMessage
 import smtplib, ssl
 
-
-
 def wmcheck(url, desire, email):
     headers = {"accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
 				"accept-encoding":"gzip, deflate, br",
@@ -40,7 +38,6 @@ def alert(name,desire,url,email):
 
     msg = EmailMessage()
     msg.set_content("Hi there,\n\nThe %s has reached %.2f or lower.\n\nHere is the link to the product:\n%s" % (name,desire,url))
-    
 
     msg['Subject'] = "Sartaj's Price Alert!"
     msg['From'] = "sartajpricealerts@gmail.com"
