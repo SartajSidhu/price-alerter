@@ -22,7 +22,7 @@ def az():
                 flash("Sorry can't find the products price", category="error")
             else:
                 flash("You will receive an email once the product is lower than $%.2f" % desire, category="success")
-                amazoncheck(url,desire,email)
+                #amazoncheck(url,desire,email)
 
     return render_template("az.html")
 

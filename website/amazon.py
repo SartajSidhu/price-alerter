@@ -11,8 +11,11 @@ def amazoncheck(url, desire, email):
     while True:
 
         product = requests.get(url,headers=headers) #get given url
-        soup = BeautifulSoup(product.content,'lxml') 
-        name = soup.find(id="productTitle").get_text().strip() #product name
+        soup = BeautifulSoup(product.content,'lxml')
+        try: 
+            name = soup.find(id="productTitle").get_text().strip() #product name
+        except:
+            name = ""
         
         try:
             price = float(soup.find(id="corePrice_feature_div").find_next("span").find_next("span").get_text().replace('$', '').replace(',', '').strip()) #price of product for amazon.ca
