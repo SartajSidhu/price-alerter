@@ -12,7 +12,7 @@ Typing in the info
 ![](screenshots/info.png)
 
 Since the product is already less than 40.25
-Alert email is sent
+Alert email is sent.
 Email looks like :
 
 ![](screenshots/email.png)
